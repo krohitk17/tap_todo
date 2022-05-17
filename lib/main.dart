@@ -3,10 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:todo/models/notification.dart';
 import 'package:todo/routes.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await NotificationService().init();
+  await NotificationService().initNotification();
+  tz.initializeTimeZones();
   await Firebase.initializeApp();
   runApp(const ToDo());
 }

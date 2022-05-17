@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:todo/components/deleteicon.dart';
+import 'package:todo/components/button.dart';
 import 'package:todo/components/dialogbox.dart';
-import 'package:todo/models/notification.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({Key? key, required this.taskRef}) : super(key: key);
@@ -12,6 +11,9 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
+  late int hours;
+  late int minutes;
+  late bool timeperiod;
   @override
   void initState() {
     super.initState();
@@ -45,8 +47,9 @@ class _TaskScreenState extends State<TaskScreen> {
                 color: Colors.black,
               ),
               actions: [
-                DeleteIcon(
+                Button(
                     title: 'Delete Task',
+                    content: 'Are you sure you want to delete this task?',
                     onPressed: () {
                       widget.taskRef.delete();
                       Navigator.pop(context);
@@ -54,10 +57,77 @@ class _TaskScreenState extends State<TaskScreen> {
                     },
                     size: 30),
                 IconButton(
-                  onPressed: () {
-                    NotificationService().showNotification(1, 'Title',
-                        'This is test notification', DateTime.now().second);
-                  },
+                  onPressed: () => showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text('Reminder'),
+                          content: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: TextField(
+                                      decoration: const InputDecoration(
+                                        labelText: 'hours',
+                                      ),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          hours = int.parse(value);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: TextField(
+                                      decoration: const InputDecoration(
+                                        labelText: 'minutes',
+                                      ),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          minutes = int.parse(value);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  PopupMenuButton(
+                                    onSelected: (value) {
+                                      setState(() {
+                                        timeperiod = value as bool;
+                                      });
+                                    },
+                                    itemBuilder: (context) => [
+                                      const PopupMenuItem(
+                                        value: false,
+                                        child: Text('AM'),
+                                      ),
+                                      const PopupMenuItem(
+                                        value: true,
+                                        child: Text('PM'),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          actions: <Widget>[
+                            ElevatedButton(
+                              onPressed: () {
+                                print(hours);
+                                print(minutes);
+                                print(timeperiod);
+                                Navigator.pop(context);
+                              },
+                              child: const Text("Set Reminder"),
+                            ),
+                            ElevatedButton(
+                              child: const Text("Cancel"),
+                              onPressed: () => Navigator.of(context).pop(),
+                            ),
+                          ],
+                        );
+                      }),
                   icon: const Icon(Icons.alarm, color: Colors.black),
                 ),
               ],
@@ -137,7 +207,7 @@ class _TaskScreenState extends State<TaskScreen> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: itemSnapshot[index]['checkbox']
-                                      ? Colors.lightBlue
+                                      ? Colors.blue
                                       : Colors.black12,
                                 ),
                                 child: Row(

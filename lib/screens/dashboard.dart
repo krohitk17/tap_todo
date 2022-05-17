@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:todo/components/deleteicon.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:todo/components/button.dart';
 import 'package:todo/components/dialogbox.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:todo/components/logo.dart';
 import 'package:todo/routes.dart';
 
 class Dashboard extends StatefulWidget {
@@ -16,6 +18,7 @@ class Dashboard extends StatefulWidget {
 class DashboardState extends State<Dashboard> {
   final _auth = FirebaseAuth.instance;
   late String uid;
+  bool loading = false;
 
   @override
   void initState() {
@@ -39,23 +42,134 @@ class DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: ModalProgressHUD(
+        inAsyncCall: loading,
+        child: Drawer(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              Container(
+                padding: const EdgeInsets.all(20),
+                child: IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      size: 40,
+                    )),
+              ),
+              AppName(
+                size: 30,
+                iconsize: 10,
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              Center(
+                child: Text(
+                  _auth.currentUser?.email ?? '',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const Spacer(flex: 1),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                child: ListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    side: const BorderSide(
+                      color: Colors.black,
+                      width: 1,
+                    ),
+                  ),
+                  leading: const Icon(
+                    Icons.logout,
+                    color: Colors.black,
+                    size: 30,
+                  ),
+                  title: const Text('Logout', style: TextStyle(fontSize: 25)),
+                  onTap: () => showDialog(
+                    context: context,
+                    builder: (context) {
+                      return DialogBox(
+                        title: 'Logout',
+                        content: 'Are you sure you want to logout?',
+                        onPressed: () async {
+                          setState(() {
+                            loading = true;
+                          });
+                          Navigator.of(context).pop();
+                          await _auth.signOut();
+                          setState(() {
+                            loading = false;
+                          });
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                child: ListTile(
+                  leading: const Icon(
+                    Icons.delete,
+                    color: Colors.black,
+                    size: 30,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    side: const BorderSide(
+                      color: Colors.black,
+                      width: 1,
+                    ),
+                  ),
+                  title: const Text('Delete Account',
+                      style: TextStyle(fontSize: 25)),
+                  onTap: () => showDialog(
+                    context: context,
+                    builder: (context) {
+                      return DialogBox(
+                        title: 'Delete Account',
+                        content:
+                            'Are you sure you want to delete your account?',
+                        onPressed: () async {
+                          setState(() {
+                            loading = true;
+                          });
+                          Navigator.of(context).pop();
+                          print(uid);
+                          await FirebaseFirestore.instance
+                              .collection('tasks')
+                              .doc(uid)
+                              .delete();
+                          await _auth.currentUser?.delete();
+                          setState(() {
+                            loading = false;
+                          });
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+            ],
+          ),
+        ),
+      ),
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return DialogBox(
-                      title: 'Logout',
-                      onPressed: () {
-                        _auth.signOut();
-                        Navigator.pop(context);
-                      },
-                    );
-                  });
-            }),
         title: const Text('Tap ToDo'),
       ),
       body: Container(
@@ -117,12 +231,14 @@ class DashboardState extends State<Dashboard> {
                               ),
                             ],
                           ),
-                          DeleteIcon(
+                          Button(
                             onPressed: () {
                               docs[index].reference.delete();
                               Navigator.pop(context);
                             },
                             title: 'Delete Task',
+                            content:
+                                'Are you sure you want to delete this task?',
                             size: 35,
                           ),
                         ],
@@ -148,10 +264,8 @@ class DashboardState extends State<Dashboard> {
             Navigator.pushNamed(context, RouteNames.taskscreen, arguments: task)
                 .then((value) async {
               final snapshot = await task.get();
-              print(snapshot.data());
               if (snapshot['title'] == '') {
                 task.delete();
-                print('deleted');
               }
             });
           }),

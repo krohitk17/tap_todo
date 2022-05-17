@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:todo/components/dialogbox.dart';
 
-class DeleteIcon extends StatelessWidget {
-  const DeleteIcon(
+class Button extends StatelessWidget {
+  const Button(
       {Key? key,
       required this.size,
       required this.onPressed,
-      required this.title})
+      required this.title,
+      this.content = ''})
       : super(key: key);
   final String title;
+  final String content;
   final Function onPressed;
   final double size;
 
@@ -21,6 +23,7 @@ class DeleteIcon extends StatelessWidget {
         builder: (context) {
           return DialogBox(
             title: title,
+            content: content,
             onPressed: () => onPressed(),
           );
         },

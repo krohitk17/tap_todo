@@ -1,6 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
-import 'package:timezone/data/latest.dart' as tz;
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 class NotificationService {
   static final NotificationService _notificationService =
@@ -15,15 +15,15 @@ class NotificationService {
 
   NotificationService._internal();
 
-  Future<void> init() async {
+  Future<void> initNotification() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@drawable/ic_flutternotification');
 
     const IOSInitializationSettings initializationSettingsIOS =
         IOSInitializationSettings(
-      requestAlertPermission: false,
-      requestBadgePermission: false,
-      requestSoundPermission: false,
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
     );
 
     const InitializationSettings initializationSettings =
@@ -35,12 +35,14 @@ class NotificationService {
   }
 
   Future<void> showNotification(
-      int id, String title, String body, int seconds) async {
+      int id, String title, String body, DateTime time) async {
+    tz.getLocation(await FlutterNativeTimezone.getLocalTimezone());
     await flutterLocalNotificationsPlugin.zonedSchedule(
       id,
       title,
       body,
-      tz.TZDateTime.now(tz.local).add(Duration(seconds: seconds)),
+      tz.TZDateTime.from(
+          time, tz.getLocation(await FlutterNativeTimezone.getLocalTimezone())),
       const NotificationDetails(
         android: AndroidNotificationDetails('main_channel', 'Main Channel',
             channelDescription: 'Main channel notifications',

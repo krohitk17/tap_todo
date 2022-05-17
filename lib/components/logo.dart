@@ -8,22 +8,29 @@ Widget Logo(double size) {
   );
 }
 
-Widget AppName(double size) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      const Center(
-        child: Text(
-          'Tap ToDo',
-          style: TextStyle(
-            fontSize: 50,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
+class AppName extends StatelessWidget {
+  const AppName({Key? key, this.size = 50, required this.iconsize})
+      : super(key: key);
+  final double size;
+  final double iconsize;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(
+          child: Text(
+            'Tap ToDo',
+            style: TextStyle(
+              fontSize: size,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
           ),
         ),
-      ),
-      const SizedBox(width: 30),
-      Logo(size),
-    ],
-  );
+        const SizedBox(width: 30),
+        Logo(iconsize),
+      ],
+    );
+  }
 }

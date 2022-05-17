@@ -21,7 +21,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                AppName(7),
+                const AppName(iconsize: 7),
                 const SizedBox(height: 100),
                 RoundedButton(
                   colour: Colors.lightBlueAccent,

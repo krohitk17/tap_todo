@@ -51,7 +51,7 @@ class AuthScreenState extends State<AuthScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               const SizedBox(height: 150),
-              AppName(7),
+              const AppName(iconsize: 7),
               const SizedBox(height: 50),
               Center(
                 child: Text(
@@ -65,6 +65,7 @@ class AuthScreenState extends State<AuthScreen> {
               ),
               const SizedBox(height: 50),
               TextField(
+                style: const TextStyle(fontSize: 20),
                 keyboardType: TextInputType.emailAddress,
                 controller: emailController,
                 textAlign: TextAlign.center,
@@ -78,6 +79,7 @@ class AuthScreenState extends State<AuthScreen> {
                 height: 10,
               ),
               TextField(
+                style: const TextStyle(fontSize: 20),
                 controller: passwordController,
                 obscureText: true,
                 textAlign: TextAlign.center,
