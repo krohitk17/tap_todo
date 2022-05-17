@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:todo/components/logo.dart';
 import 'package:todo/components/roundedbutton.dart';
-import 'package:todo/constants.dart';
+import 'package:todo/components/textfielddecoration.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key, required this.login}) : super(key: key);
@@ -47,9 +48,22 @@ class AuthScreenState extends State<AuthScreen> {
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+              const SizedBox(height: 150),
+              AppName(7),
+              const SizedBox(height: 50),
+              Center(
+                child: Text(
+                    widget.login
+                        ? 'Log In to your account'
+                        : 'Create An Account',
+                    style: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black)),
+              ),
+              const SizedBox(height: 50),
               TextField(
                 keyboardType: TextInputType.emailAddress,
                 controller: emailController,
@@ -61,7 +75,7 @@ class AuthScreenState extends State<AuthScreen> {
                     kTextFieldDecoration.copyWith(hintText: 'Enter your email'),
               ),
               const SizedBox(
-                height: 8.0,
+                height: 10,
               ),
               TextField(
                 controller: passwordController,

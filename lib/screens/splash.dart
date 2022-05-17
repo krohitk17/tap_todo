@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:todo/components/logo.dart';
 import 'package:todo/routes.dart';
 
 class Splashscreen extends StatefulWidget {
@@ -18,7 +19,8 @@ class _SplashscreenState extends State<Splashscreen> {
 
   void goMainScreen() {
     Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, RouteNames.mainscreen);
+      Navigator.pushNamedAndRemoveUntil(
+          context, RouteNames.mainscreen, (route) => false);
     });
   }
 
@@ -32,7 +34,7 @@ class _SplashscreenState extends State<Splashscreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(
-              width: 150.0,
+              width: 220.0,
               child: DefaultTextStyle(
                 style: const TextStyle(
                   fontSize: 30.0,
@@ -42,8 +44,10 @@ class _SplashscreenState extends State<Splashscreen> {
                     TypewriterAnimatedText('Tap ToDo',
                         textStyle: const TextStyle(
                           fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
-                        speed: const Duration(milliseconds: 200)),
+                        speed: const Duration(milliseconds: 150)),
                   ],
                   onTap: () {
                     Navigator.pushNamed(context, RouteNames.mainscreen);
@@ -51,11 +55,7 @@ class _SplashscreenState extends State<Splashscreen> {
                 ),
               ),
             ),
-            Image.asset(
-              'images/logo.png',
-              alignment: Alignment.center,
-              scale: 2,
-            ),
+            Logo(8),
           ],
         ),
       ),

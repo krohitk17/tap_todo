@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo/components/logo.dart';
 import 'package:todo/components/roundedbutton.dart';
 import 'package:todo/routes.dart';
 
@@ -20,6 +21,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
+                AppName(7),
+                const SizedBox(height: 100),
                 RoundedButton(
                   colour: Colors.lightBlueAccent,
                   title: 'Log In',
