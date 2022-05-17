@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:todo/models/notification.dart';
 import 'package:todo/routes.dart';
 
@@ -14,6 +15,7 @@ class ToDo extends StatelessWidget {
   const ToDo({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     return const MaterialApp(
       debugShowCheckedModeBanner: true,
       onGenerateRoute: AppRoutes.onGenerateRoute,

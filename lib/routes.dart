@@ -2,11 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/screens/auth.dart';
 import 'package:todo/screens/dashboard.dart';
+import 'package:todo/screens/mainscreen.dart';
 import 'package:todo/screens/splash.dart';
 import 'package:todo/screens/task.dart';
 import 'package:todo/screens/welcome.dart';
 
 class RouteNames {
+  static const String mainscreen = '/mainscreen';
   static const String welcomescreen = '/welcomescreen';
   static const String authscreen = '/authscreen';
   static const String dashboard = '/dashboard';
@@ -17,6 +19,9 @@ class RouteNames {
 class AppRoutes {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case RouteNames.mainscreen:
+        return MaterialPageRoute<dynamic>(
+            builder: (context) => const MainScreen());
       case RouteNames.welcomescreen:
         return MaterialPageRoute<dynamic>(
             builder: (_) => const WelcomeScreen());

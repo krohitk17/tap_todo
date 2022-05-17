@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:todo/routes.dart';
 
 class Splashscreen extends StatefulWidget {
   static const String id = 'splash_screen';
@@ -15,8 +16,15 @@ class _SplashscreenState extends State<Splashscreen> {
     super.initState();
   }
 
+  void goMainScreen() {
+    Future.delayed(const Duration(seconds: 2), () {
+      Navigator.pushReplacementNamed(context, RouteNames.mainscreen);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    goMainScreen();
     return Scaffold(
       body: Center(
         child: Row(
@@ -38,7 +46,7 @@ class _SplashscreenState extends State<Splashscreen> {
                         speed: const Duration(milliseconds: 200)),
                   ],
                   onTap: () {
-                    // print("Tap Event");
+                    Navigator.pushNamed(context, RouteNames.mainscreen);
                   },
                 ),
               ),

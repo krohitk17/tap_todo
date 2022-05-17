@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:todo/screens/dashboard.dart';
 import 'package:todo/screens/welcome.dart';
 
-class ToDo extends StatelessWidget {
-  const ToDo({Key? key}) : super(key: key);
+class MainScreen extends StatelessWidget {
+  const MainScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(

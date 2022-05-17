@@ -83,6 +83,8 @@ class _TaskScreenState extends State<TaskScreen> {
                       if (value.isNotEmpty) {
                         widget.taskRef.update({'title': value});
                         titleController.text = value;
+                      } else {
+                        titleController.text = taskSnapshot['title'];
                       }
                     },
                   ),
