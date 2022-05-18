@@ -50,8 +50,8 @@ class AuthScreenState extends State<AuthScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              const SizedBox(height: 150),
-              const AppName(iconsize: 7),
+              const SizedBox(height: 50),
+              const AppName(size: 40, iconsize: 10),
               const SizedBox(height: 50),
               Center(
                 child: Text(

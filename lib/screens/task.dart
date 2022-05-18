@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/components/button.dart';
 import 'package:todo/components/dialogbox.dart';
+import 'package:todo/models/notification.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({Key? key, required this.taskRef}) : super(key: key);
@@ -39,100 +40,33 @@ class _TaskScreenState extends State<TaskScreen> {
           TextEditingController itemController = TextEditingController();
           return Scaffold(
             appBar: AppBar(
-              elevation: 0,
-              automaticallyImplyLeading: false,
-              leading: IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.arrow_back),
-                color: Colors.black,
-              ),
-              actions: [
-                Button(
-                    title: 'Delete Task',
-                    content: 'Are you sure you want to delete this task?',
-                    onPressed: () {
-                      widget.taskRef.delete();
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                    },
-                    size: 30),
-                IconButton(
-                  onPressed: () => showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: const Text('Reminder'),
-                          content: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: TextField(
-                                      decoration: const InputDecoration(
-                                        labelText: 'hours',
-                                      ),
-                                      onChanged: (value) {
-                                        setState(() {
-                                          hours = int.parse(value);
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: TextField(
-                                      decoration: const InputDecoration(
-                                        labelText: 'minutes',
-                                      ),
-                                      onChanged: (value) {
-                                        setState(() {
-                                          minutes = int.parse(value);
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                  PopupMenuButton(
-                                    onSelected: (value) {
-                                      setState(() {
-                                        timeperiod = value as bool;
-                                      });
-                                    },
-                                    itemBuilder: (context) => [
-                                      const PopupMenuItem(
-                                        value: false,
-                                        child: Text('AM'),
-                                      ),
-                                      const PopupMenuItem(
-                                        value: true,
-                                        child: Text('PM'),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          actions: <Widget>[
-                            ElevatedButton(
-                              onPressed: () {
-                                print(hours);
-                                print(minutes);
-                                print(timeperiod);
-                                Navigator.pop(context);
-                              },
-                              child: const Text("Set Reminder"),
-                            ),
-                            ElevatedButton(
-                              child: const Text("Cancel"),
-                              onPressed: () => Navigator.of(context).pop(),
-                            ),
-                          ],
-                        );
-                      }),
-                  icon: const Icon(Icons.alarm, color: Colors.black),
+                elevation: 0,
+                automaticallyImplyLeading: false,
+                leading: IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(Icons.arrow_back),
+                  color: Colors.black,
                 ),
-              ],
-              backgroundColor: Colors.white,
-            ),
+                actions: [
+                  Button(
+                      title: 'Delete Task',
+                      content: 'Are you sure you want to delete this task?',
+                      onPressed: () {
+                        widget.taskRef.delete();
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
+                      size: 30),
+                  IconButton(
+                    onPressed: () => NotificationService().showNotification(
+                        1,
+                        taskSnapshot['title'],
+                        'Task Reminder',
+                        DateTime.now().add(const Duration(seconds: 5))),
+                    icon: const Icon(Icons.alarm, color: Colors.black),
+                  ),
+                ],
+                backgroundColor: Colors.white10),
             body: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[

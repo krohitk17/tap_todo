@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:todo/components/button.dart';
@@ -35,7 +36,9 @@ class DashboardState extends State<Dashboard> {
         });
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -53,7 +56,7 @@ class DashboardState extends State<Dashboard> {
                 height: 30,
               ),
               Container(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(5),
                 child: IconButton(
                     onPressed: () => Navigator.pop(context),
                     icon: const Icon(
@@ -61,7 +64,7 @@ class DashboardState extends State<Dashboard> {
                       size: 40,
                     )),
               ),
-              AppName(
+              const AppName(
                 size: 30,
                 iconsize: 10,
               ),
@@ -147,7 +150,6 @@ class DashboardState extends State<Dashboard> {
                             loading = true;
                           });
                           Navigator.of(context).pop();
-                          print(uid);
                           await FirebaseFirestore.instance
                               .collection('tasks')
                               .doc(uid)

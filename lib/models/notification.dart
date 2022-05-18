@@ -17,7 +17,7 @@ class NotificationService {
 
   Future<void> initNotification() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@drawable/ic_flutternotification');
+        AndroidInitializationSettings('@mipmap/ic_launcher');
 
     const IOSInitializationSettings initializationSettingsIOS =
         IOSInitializationSettings(
@@ -48,7 +48,7 @@ class NotificationService {
             channelDescription: 'Main channel notifications',
             importance: Importance.max,
             priority: Priority.max,
-            icon: '@drawable/ic_flutternotification'),
+            icon: '@mipmap/ic_launcher'),
         iOS: IOSNotificationDetails(
           sound: 'default.wav',
           presentAlert: true,

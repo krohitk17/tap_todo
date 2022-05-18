@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget Logo(double size) {
+Widget logo(double size) {
   return Image.asset(
     'images/logo.png',
     alignment: Alignment.center,
@@ -29,7 +29,7 @@ class AppName extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 30),
-        Logo(iconsize),
+        logo(iconsize),
       ],
     );
   }

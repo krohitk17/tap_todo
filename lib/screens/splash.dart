@@ -55,7 +55,7 @@ class _SplashscreenState extends State<Splashscreen> {
                 ),
               ),
             ),
-            Logo(8),
+            logo(8),
           ],
         ),
       ),
