@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:271405959560:android:137d50dd50080708fcd23d",
+        "mobilesdk_app_id": "1:271405959560:android:5291475027662c12fcd23d",
         "android_client_info": {
-          "package_name": "com.seproject.todo"
+          "package_name": "com.seproject.tap_todo"
         }
       },
       "oauth_client": [

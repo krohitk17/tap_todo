@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.seproject.todo">
+    package="com.seproject.tap_todo">
    <application
         android:label="tap_todo"
         android:name="${applicationName}"
