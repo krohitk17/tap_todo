@@ -17,7 +17,7 @@ class NotificationService {
 
   Future<void> initNotification() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('@mipmap/app_logo');
 
     const IOSInitializationSettings initializationSettingsIOS =
         IOSInitializationSettings(
@@ -44,11 +44,14 @@ class NotificationService {
       tz.TZDateTime.from(
           time, tz.getLocation(await FlutterNativeTimezone.getLocalTimezone())),
       const NotificationDetails(
-        android: AndroidNotificationDetails('main_channel', 'Main Channel',
-            channelDescription: 'Main channel notifications',
-            importance: Importance.max,
-            priority: Priority.max,
-            icon: '@mipmap/ic_launcher'),
+        android: AndroidNotificationDetails(
+          'main_channel',
+          'Main Channel',
+          channelDescription: 'Main channel notifications',
+          importance: Importance.max,
+          priority: Priority.max,
+          icon: '@mipmap/app_logo',
+        ),
         iOS: IOSNotificationDetails(
           sound: 'default.wav',
           presentAlert: true,

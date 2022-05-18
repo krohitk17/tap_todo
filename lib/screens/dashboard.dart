@@ -172,7 +172,7 @@ class DashboardState extends State<Dashboard> {
         ),
       ),
       appBar: AppBar(
-        title: const Text('Tap ToDo'),
+        title: const Text('Tap ToDo', style: TextStyle(fontSize: 25)),
       ),
       body: Container(
         padding: const EdgeInsets.all(10),
@@ -194,56 +194,61 @@ class DashboardState extends State<Dashboard> {
               return ListView.builder(
                 itemCount: docs.length,
                 itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, RouteNames.taskscreen,
-                          arguments: docs[index].reference);
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.black12,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(left: 10),
-                                child: Text(
-                                  docs[index]['title'],
-                                  style: const TextStyle(
-                                    fontSize: 25,
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: InkWell(
+                      splashColor: Colors.blue,
+                      onTap: () {
+                        Navigator.pushNamed(context, RouteNames.taskscreen,
+                            arguments: docs[index].reference);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.black12,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(left: 10),
+                                  child: Text(
+                                    docs[index]['title'],
+                                    style: const TextStyle(
+                                      fontSize: 25,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                margin: const EdgeInsets.only(left: 10),
-                                child: Text(DateFormat('hh:mm a    dd-MM-yyyy')
-                                    .format(
-                                        (docs[index]['timestamp'] as Timestamp)
-                                            .toDate())),
-                              ),
-                            ],
-                          ),
-                          Button(
-                            onPressed: () {
-                              docs[index].reference.delete();
-                              Navigator.pop(context);
-                            },
-                            title: 'Delete Task',
-                            content:
-                                'Are you sure you want to delete this task?',
-                            size: 35,
-                          ),
-                        ],
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.only(left: 10),
+                                  child: Text(
+                                      DateFormat('hh:mm a    dd-MM-yyyy')
+                                          .format((docs[index]['timestamp']
+                                                  as Timestamp)
+                                              .toDate())),
+                                ),
+                              ],
+                            ),
+                            Button(
+                              onPressed: () {
+                                docs[index].reference.delete();
+                                Navigator.pop(context);
+                              },
+                              title: 'Delete Task',
+                              content:
+                                  'Are you sure you want to delete this task?',
+                              size: 35,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
