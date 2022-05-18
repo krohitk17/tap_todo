@@ -90,12 +90,12 @@ class DashboardState extends State<Dashboard> {
                     borderRadius: BorderRadius.circular(10),
                     side: const BorderSide(
                       color: Colors.black,
-                      width: 1,
+                      width: 2,
                     ),
                   ),
                   leading: const Icon(
                     Icons.logout,
-                    color: Colors.black,
+                    color: Colors.blue,
                     size: 30,
                   ),
                   title: const Text('Logout', style: TextStyle(fontSize: 25)),
@@ -126,14 +126,14 @@ class DashboardState extends State<Dashboard> {
                 child: ListTile(
                   leading: const Icon(
                     Icons.delete,
-                    color: Colors.black,
+                    color: Colors.red,
                     size: 30,
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                     side: const BorderSide(
                       color: Colors.black,
-                      width: 1,
+                      width: 2,
                     ),
                   ),
                   title: const Text('Delete Account',
